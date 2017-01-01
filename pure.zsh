@@ -241,14 +241,12 @@ prompt_pure_async_git_dirty() {
 
 	# use cd -q to avoid side effects of changing directory, e.g. chpwd hooks
 	builtin cd -q "$*"
-
 	if [[ "$untracked_dirty" == "0" ]]; then
 		command git diff --no-ext-diff --quiet --exit-code
 	else
 		test -z "$(command git status --porcelain --ignore-submodules -unormal)"
 	fi
-
-	(( $? )) && echo "*"
+	(( $? )) && echo "${PURE_GIT_DIRTY_SYMBOL:-*}"
 }
 
 prompt_pure_async_git_fetch() {
